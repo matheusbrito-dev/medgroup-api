@@ -158,7 +158,7 @@ namespace APIMED.Tests.ContatoTests
             var updateContato = new ContatoViewModel
             {
                 DtNascimento = DateTime.Parse("05-10-1995"),
-                NomeContato = "David"
+                NomeContato = "Luiz Filipe"
             };
 
             //act 

@@ -21,10 +21,11 @@ namespace APIMED.Data.Repository
         {
             return await DbSet.AsNoTracking().Where(predicate).ToListAsync();
         }
-        public virtual async Task<TEntity> ObterPorId(Guid id)
-        {
-            return await DbSet.FindAsync(id);
-        }
+        public async Task<TEntity> ObterPorId(Guid Id)
+      => await DbSet
+          .AsNoTracking()
+          .Where(x => x.Id == Id)
+          .FirstOrDefaultAsync();
         public virtual async Task<List<TEntity>> ObterTodos()
         {
             return await DbSet.ToListAsync();
@@ -36,12 +37,14 @@ namespace APIMED.Data.Repository
         }
         public virtual async Task Atualizar(TEntity entity)
         {
+            Db.ChangeTracker.Clear();
             Db.Entry(entity).State = EntityState.Modified;
             DbSet.Update(entity);
             await SaveChanges();
         }
         public virtual async Task Remover(Guid id)
         {
+            Db.ChangeTracker.Clear();
             DbSet.Remove(new TEntity { Id = id });
             await SaveChanges();
         }

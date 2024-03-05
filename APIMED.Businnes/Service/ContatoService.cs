@@ -4,6 +4,7 @@ using APIMED.Businnes.ViewModel;
 using APIMED.Data.Repository.Interfaces;
 using APIMED.Domain.Entities;
 using AutoMapper;
+using System;
 
 namespace APIMED.Businnes.Service
 {
@@ -19,15 +20,23 @@ namespace APIMED.Businnes.Service
 
         public async Task<IEnumerable<ContatoViewModel>> GetAll()
         {
-            var funcionarios = await _contatoRepository.ObterTodos();
-            var filtroAtivo = funcionarios.Where(funcionarios => funcionarios.Ativo == true).ToList();
+            var contatos = await _contatoRepository.ObterTodos();
+            var filtroAtivo = contatos.Where(contatos => contatos.Ativo == true).ToList();
 
             return _mapper.Map<List<ContatoViewModel>>(filtroAtivo);
         }
         public async Task<ContatoViewModel> RetornaPorId(Guid id)
         {
-            var funcionario = await _contatoRepository.ObterPorId(id);
-            return _mapper.Map<ContatoViewModel>(funcionario);
+            var contato = await _contatoRepository.ObterPorId(id);
+            if(contato ==  null)
+            {
+                return new ContatoViewModel()
+                {
+                    Valido = false,
+                    MsgErro = "Nenhum contato com esse ID foi encontrado"
+                };
+            }
+            return _mapper.Map<ContatoViewModel>(contato);
         }
         public async Task<ContatoViewModel> Incluir(ContatoViewModel obj)
         {
@@ -61,7 +70,7 @@ namespace APIMED.Businnes.Service
 
             try
             {
-                var obj = _contatoRepository.ObterPorId(id);
+                var obj = await _contatoRepository.ObterPorId(id);
 
                 if (obj == null)
                 {
@@ -74,7 +83,7 @@ namespace APIMED.Businnes.Service
                     await _contatoRepository.Remover(id);
                     retorno.Valido = true;
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -88,9 +97,26 @@ namespace APIMED.Businnes.Service
         {
             try
             {
-                var objMap = _mapper.Map<Contato>(obj);
-                await _contatoRepository.Atualizar(objMap);
-                obj.Valido = true;
+                var contato = await _contatoRepository.ObterPorId(obj.Id);
+                obj.Idade = ValidaContato.CalcularIdade(obj);
+                var validarContato = ValidaContato.ValidarDados(obj);
+
+                if (!validarContato.Valido)
+                    obj.MsgErro = "Erro ao incluir !" + validarContato.Erro;
+
+                else
+                {
+                    try
+                    {
+                        _mapper.Map<ContatoViewModel, Contato>(obj, contato);
+                        await _contatoRepository.SaveChanges();
+                        obj.Valido = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        obj.MsgErro = "Erro ao alterar dados! " + ex.Message;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -99,6 +125,43 @@ namespace APIMED.Businnes.Service
             }
 
             return obj;
+        }
+        public async Task<ContatoViewModel> Ativar(Guid id)
+        {
+            var resultado = new ContatoViewModel();
+            try
+            {
+
+                var contato = await _contatoRepository.ObterPorId(id);
+
+                if (contato == null)
+                {
+                    resultado.MsgErro = "Contato não encontrado!";
+                    resultado.Valido = false;
+                    return resultado;
+                }
+
+                if (contato.Ativo)
+                {
+                    contato.Ativo = false;
+                }
+                else
+                {
+                    contato.Ativo = true;
+                }
+
+                await _contatoRepository.Atualizar(contato);
+                resultado.Valido = true;
+                resultado.MsgErro = contato.Ativo ? "Contato ativado com sucesso!" : "Contato desativado com sucesso!";
+                resultado = _mapper.Map<ContatoViewModel>(contato);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return resultado;
         }
     }
 }

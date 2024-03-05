@@ -8,7 +8,8 @@ namespace APIMED.Data.Data
     {
         public ApiMedDbContext(DbContextOptions option) : base(option) 
         {
-
+            ChangeTracker.AutoDetectChangesEnabled = false;
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public DbSet<Contato> Contatos { get; set; }
     }

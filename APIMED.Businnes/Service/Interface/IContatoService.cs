@@ -9,5 +9,6 @@ namespace APIMED.Businnes.Service.Interface
         Task<ContatoViewModel> Incluir(ContatoViewModel obj);
         Task<ContatoViewModel> Alterar(ContatoViewModel obj);
         Task<ContatoViewModel> Excluir(Guid id);
+        Task<ContatoViewModel> Ativar(Guid id);
     }
 }

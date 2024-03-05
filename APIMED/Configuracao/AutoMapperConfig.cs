@@ -1,4 +1,5 @@
-﻿using APIMED.Businnes.ViewModel;
+﻿using APIMED.Businnes.DTO;
+using APIMED.Businnes.ViewModel;
 using APIMED.Domain.Entities;
 using AutoMapper;
 
@@ -9,6 +10,7 @@ namespace APIMED.Configuração
         public AutoMapperConfig()
         {
             CreateMap<Contato, ContatoViewModel>().ReverseMap();
+            CreateMap<ContatoDTO, ContatoViewModel>().ReverseMap();
         }
     }
 }

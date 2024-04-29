@@ -1,0 +1,12 @@
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\bin\Debug\net8.0\APIMED.Domain.deps.json
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\bin\Debug\net8.0\APIMED.Domain.dll
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\bin\Debug\net8.0\APIMED.Domain.pdb
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.AssemblyInfoInputs.cache
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.AssemblyInfo.cs
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.csproj.CoreCompileInputs.cache
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.sourcelink.json
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.dll
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\refint\APIMED.Domain.dll
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\APIMED.Domain.pdb
+C:\Users\mathe\Documents\APIMED\APIMED.Domain\obj\Debug\net8.0\ref\APIMED.Domain.dll

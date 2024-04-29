@@ -1,4 +1,4 @@
-using APIMED.Configuração;
+using APIMED.ConfiguraÃ§Ã£o;
 using APIMED.Data.Data;
 using Microsoft.EntityFrameworkCore;
 
